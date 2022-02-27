@@ -28,6 +28,10 @@ export class SignUpController implements BaseController {
         return apiError(new InvalidParamError('email'))
       }
 
+      if (httpRequest.body.password !== httpRequest.body.passwordConfirmation) {
+        return apiError(new InvalidParamError('passwordConfirmation'))
+      }
+
       return {
         statusCode: 200
       }
