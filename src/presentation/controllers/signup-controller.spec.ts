@@ -3,27 +3,6 @@ import { MissingParamError } from '../errors/missing-param-error'
 import { EmailValidator } from '../protocols/email-validator'
 import { SignUpController } from './signup-controller'
 
-interface SutTypes {
-  sut: SignUpController
-  emailValidatorStub: EmailValidator
-}
-
-class EmailValidatorStub implements EmailValidator {
-  isValid (email: string): boolean {
-    return true
-  }
-}
-
-const makeSut = (): SutTypes => {
-  const emailValidator = new EmailValidatorStub()
-  const sut = new SignUpController(emailValidator)
-
-  return {
-    sut: sut,
-    emailValidatorStub: emailValidator
-  }
-}
-
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided ', () => {
     // Arrange
@@ -124,3 +103,24 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
 })
+
+interface SutTypes {
+  sut: SignUpController
+  emailValidatorStub: EmailValidator
+}
+
+class EmailValidatorStub implements EmailValidator {
+  isValid (email: string): boolean {
+    return true
+  }
+}
+
+const makeSut = (): SutTypes => {
+  const emailValidator = new EmailValidatorStub()
+  const sut = new SignUpController(emailValidator)
+
+  return {
+    sut: sut,
+    emailValidatorStub: emailValidator
+  }
+}
