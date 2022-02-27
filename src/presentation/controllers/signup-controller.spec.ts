@@ -1,4 +1,4 @@
-import { SignUpController } from './signupController'
+import { SignUpController } from './signup-controller'
 
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided ', () => {

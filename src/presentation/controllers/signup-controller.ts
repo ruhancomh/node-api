@@ -1,5 +1,5 @@
-import { HttpRequest } from '../protocols/httpRequest'
-import { HttpResponse } from '../protocols/httpResponse'
+import { HttpRequest } from '../protocols/http-request'
+import { HttpResponse } from '../protocols/http-response'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
