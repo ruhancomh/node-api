@@ -1,21 +1,16 @@
 import { MissingParamError } from '../errors/missing-param-error'
+import { apiError } from '../helpers/http-response-helper'
 import { HttpRequest } from '../protocols/http-request'
 import { HttpResponse } from '../protocols/http-response'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     if (httpRequest.body.name === undefined) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('name')
-      }
+      return apiError(new MissingParamError('name'))
     }
 
     if (httpRequest.body.email === undefined) {
-      return {
-        statusCode: 400,
-        body: new MissingParamError('email')
-      }
+      return apiError(new MissingParamError('email'))
     }
 
     return {
