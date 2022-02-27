@@ -1,3 +1,6 @@
+import { AccountModel } from '../../domain/models/account-model'
+import { AddAccountModel } from '../../domain/protocols/add-account-model'
+import { AddAccount } from '../../domain/usecases/add-account'
 import { InternalServerError } from '../errors/internal-server-error'
 import { InvalidParamError } from '../errors/invalid-param-error'
 import { MissingParamError } from '../errors/missing-param-error'
@@ -170,11 +173,38 @@ describe('SignUp Controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new InternalServerError())
   })
+
+  test('Should call AddAccount with correct values', () => {
+    // Arrange
+    const { sut, addAccountStub } = makeSut()
+
+    const addSpy = jest.spyOn(addAccountStub, 'add')
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@email.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    // Act
+    sut.handle(httpRequest)
+
+    // Assert
+    expect(addSpy).toBeCalledWith({
+      name: 'any_name',
+      email: 'any_email@email.com',
+      password: 'any_password'
+    })
+  })
 })
 
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
+  addAccountStub: AddAccount
 }
 
 class EmailValidatorStub implements EmailValidator {
@@ -183,12 +213,25 @@ class EmailValidatorStub implements EmailValidator {
   }
 }
 
+class AddAccountStub implements AddAccount {
+  add (account: AddAccountModel): AccountModel {
+    return {
+      id: 1,
+      name: 'valid_name',
+      email: 'valid_email@email.com',
+      password: 'valid_password'
+    }
+  }
+}
+
 const makeSut = (): SutTypes => {
   const emailValidator = new EmailValidatorStub()
-  const sut = new SignUpController(emailValidator)
+  const addAccountStub = new AddAccountStub()
+  const sut = new SignUpController(emailValidator, addAccountStub)
 
   return {
     sut: sut,
-    emailValidatorStub: emailValidator
+    emailValidatorStub: emailValidator,
+    addAccountStub: addAccountStub
   }
 }
