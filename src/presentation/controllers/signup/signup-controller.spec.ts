@@ -1,10 +1,10 @@
-import { AccountModel } from '../../domain/models/account-model'
-import { AddAccountModel } from '../../domain/protocols/add-account-model'
-import { AddAccount } from '../../domain/usecases/add-account'
-import { InternalServerError } from '../errors/internal-server-error'
-import { InvalidParamError } from '../errors/invalid-param-error'
-import { MissingParamError } from '../errors/missing-param-error'
-import { EmailValidator } from '../protocols/email-validator'
+import { AccountModel } from '../../../domain/models/account-model'
+import { AddAccountModel } from '../../../domain/protocols/add-account-model'
+import { AddAccount } from '../../../domain/usecases/add-account'
+import { InternalServerError } from '../../errors/internal-server-error'
+import { InvalidParamError } from '../../errors/invalid-param-error'
+import { MissingParamError } from '../../errors/missing-param-error'
+import { EmailValidator } from '../../protocols/email-validator'
 import { SignUpController } from './signup-controller'
 
 describe('SignUp Controller', () => {
