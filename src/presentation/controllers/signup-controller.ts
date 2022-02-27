@@ -5,12 +5,12 @@ import { HttpResponse } from '../protocols/http-response'
 
 export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
-    if (httpRequest.body.name === undefined) {
-      return apiError(new MissingParamError('name'))
-    }
+    const requiredFields = ['name', 'email']
 
-    if (httpRequest.body.email === undefined) {
-      return apiError(new MissingParamError('email'))
+    for (const field of requiredFields) {
+      if (httpRequest.body[field] === undefined) {
+        return apiError(new MissingParamError(field))
+      }
     }
 
     return {
