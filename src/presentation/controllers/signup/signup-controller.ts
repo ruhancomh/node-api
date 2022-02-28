@@ -2,7 +2,7 @@ import { AddAccount } from '../../../domain/usecases/add-account'
 import { InternalServerError } from '../../errors/internal-server-error'
 import { InvalidParamError } from '../../errors/invalid-param-error'
 import { MissingParamError } from '../../errors/missing-param-error'
-import { apiError } from '../../helpers/http-response-helper'
+import { apiError, ok } from '../../helpers/http-response-helper'
 import { BaseController } from '../../protocols/base-controller'
 import { EmailValidator } from '../../protocols/email-validator'
 import { HttpRequest } from '../../protocols/http-request'
@@ -43,10 +43,7 @@ export class SignUpController implements BaseController {
         name
       })
 
-      return {
-        statusCode: 200,
-        body: account
-      }
+      return ok(account)
     } catch (error) {
       return apiError(new InternalServerError())
     }
