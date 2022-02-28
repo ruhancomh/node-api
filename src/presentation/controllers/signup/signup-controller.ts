@@ -37,14 +37,15 @@ export class SignUpController implements BaseController {
         return apiError(new InvalidParamError('passwordConfirmation'))
       }
 
-      this.addAccount.add({
+      const account = this.addAccount.add({
         email,
         password,
         name
       })
 
       return {
-        statusCode: 200
+        statusCode: 200,
+        body: account
       }
     } catch (error) {
       return apiError(new InternalServerError())
