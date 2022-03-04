@@ -80,6 +80,27 @@ describe('DbAddAccount Usecase', () => {
     // Assert
     await expect(result).rejects.toThrow()
   })
+
+  test('Should return an account on success', async () => {
+    // Arrange
+    const { sut } = makeSut()
+    const accountData: AddAccountModel = {
+      email: 'valid_email',
+      name: 'valid_name',
+      password: 'valid_password'
+    }
+
+    // Act
+    const account = await sut.add(accountData)
+
+    // Assert
+    expect(account).toEqual({
+      id: 1,
+      email: 'valid_email',
+      name: 'valid_name',
+      password: 'encrypted_password'
+    })
+  })
 })
 
 class EncrypterStub implements Encrypter {
