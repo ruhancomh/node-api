@@ -30,4 +30,16 @@ describe('Bcrypt Adapter', () => {
     // Assert
     expect(encryptedValud).toBe('encrypted_value')
   })
+
+  test('Should throw if bcrypt throws', async () => {
+    // Arrange
+    const sut = new BcryptAdapter()
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    jest.spyOn(bcrypt, 'hash').mockImplementation(async () => await new Promise((resolve, reject) => reject(new Error())))
+    // Act
+    const encryptedValud = sut.encrypt('any_value')
+
+    // Assert
+    await expect(encryptedValud).rejects.toThrow()
+  })
 })
