@@ -1,4 +1,4 @@
-import { AccountModel } from './../../../domain/models/account-model'
+import { IAccountModel } from './../../../domain/models/account-model'
 import { AddAccountModel } from '../../../domain/protocols/add-account-model'
 import { Encrypter } from '../../protocols/encrypter'
 import { DbAddAccount } from './db-add-account'
@@ -95,7 +95,7 @@ describe('DbAddAccount Usecase', () => {
 
     // Assert
     expect(account).toEqual({
-      id: 1,
+      id: '1',
       email: 'valid_email',
       name: 'valid_name',
       password: 'encrypted_password'
@@ -110,9 +110,9 @@ class EncrypterStub implements Encrypter {
 }
 
 class AddAccountRepositoryStub implements AddAccountRepository {
-  async add (account: AddAccountModel): Promise<AccountModel> {
-    const fakeAccount: AccountModel = {
-      id: 1,
+  async add (account: AddAccountModel): Promise<IAccountModel> {
+    const fakeAccount: IAccountModel = {
+      id: '1',
       email: 'valid_email',
       name: 'valid_name',
       password: 'encrypted_password'

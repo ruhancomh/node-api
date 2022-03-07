@@ -1,5 +1,4 @@
-import { resolve } from 'path/posix'
-import { AccountModel } from '../../../domain/models/account-model'
+import { IAccountModel } from '../../../domain/models/account-model'
 import { AddAccountModel } from '../../../domain/protocols/add-account-model'
 import { AddAccount } from '../../../domain/usecases/add-account'
 import { InternalServerError } from '../../errors/internal-server-error'
@@ -244,7 +243,7 @@ describe('SignUp Controller', () => {
     // Assert
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body).toEqual({
-      id: 1,
+      id: '1',
       name: 'valid_name',
       email: 'valid_email@email.com',
       password: 'valid_password'
@@ -265,9 +264,9 @@ class EmailValidatorStub implements EmailValidator {
 }
 
 class AddAccountStub implements AddAccount {
-  async add (account: AddAccountModel): Promise<AccountModel> {
-    const fakeAccount = {
-      id: 1,
+  async add (account: AddAccountModel): Promise<IAccountModel> {
+    const fakeAccount: IAccountModel = {
+      id: '1',
       name: 'valid_name',
       email: 'valid_email@email.com',
       password: 'valid_password'
