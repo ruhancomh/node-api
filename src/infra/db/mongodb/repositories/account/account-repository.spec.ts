@@ -9,6 +9,10 @@ describe('Account Mongo Repository', () => {
     await MongoHelper.connect()
   })
 
+  afterEach(async () => {
+    await MongoHelper.clear()
+  })
+
   afterAll(async () => {
     await MongoHelper.close()
   })
